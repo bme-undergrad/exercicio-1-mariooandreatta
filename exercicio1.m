@@ -1,6 +1,6 @@
 function t = exercicio1(func, a, b)
 
-% nao alterar: inicio
+% nao alterar: inicio 
 es = 1;
 imax = 20;
 % nao alterar: fim
