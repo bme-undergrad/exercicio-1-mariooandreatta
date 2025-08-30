@@ -1,4 +1,4 @@
-function t = exercicio1(func,x0)
+function t = exercicio1(func, x0, x1_ignorado)
 
 % nao alterar: inicio
 es = 1;
@@ -16,10 +16,15 @@ while (ea > es && iter < imax)
     
     xr_old = xr;
     
-    fx_perturbed = func(xr + delta * xr);
-    fx = func(xr);
+    perturbation = delta * xr;
+    if xr == 0
+        perturbation = delta;
+    end
     
-    derivada_aprox = (fx_perturbed - fx) / (delta * xr);
+    fx = func(xr);
+    fx_perturbed = func(xr + perturbation);
+    
+    derivada_aprox = (fx_perturbed - fx) / perturbation;
     
     if derivada_aprox ~= 0
         xr = xr - fx / derivada_aprox;
