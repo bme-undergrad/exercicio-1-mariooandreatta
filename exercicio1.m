@@ -1,4 +1,4 @@
-function t = exercicio1(func, x0, x1_ignorado)
+function t = exercicio1(func, a, b)
 
 % nao alterar: inicio
 es = 1;
@@ -8,39 +8,44 @@ imax = 20;
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 
 iter = 0;
-xr = x0;
 ea = 100;
-delta = 1e-6;
+c = b; % Inicializa 'c' para o calculo do erro na primeira iteracao
 
+% O loop principal do Metodo da Falsa Posição
 while (ea > es && iter < imax)
     
-    xr_old = xr;
+    c_old = c;
+
+    fa = func(a);
+    fb = func(b);
     
-    perturbation = delta * xr;
-    if xr == 0
-        perturbation = delta;
+    % Evita divisao por zero caso os pontos tenham a mesma altura
+    if (fb - fa) == 0
+        break;
+    end
+
+    % A formula e a mesma do Metodo da Secante
+    c = b - fb * (b - a) / (fb - fa);
+    
+    % Calcula o erro relativo aproximado
+    if c ~= 0
+        ea = abs((c - c_old) / c) * 100;
     end
     
-    fx = func(xr);
-    fx_perturbed = func(xr + perturbation);
-    
-    derivada_aprox = (fx_perturbed - fx) / perturbation;
-    
-    if derivada_aprox ~= 0
-        xr = xr - fx / derivada_aprox;
+    fc = func(c);
+
+    % Atualiza o intervalo [a, b] garantindo que a raiz permaneça
+    % dentro do intervalo, o que evita a divergencia.
+    if fa * fc < 0
+        b = c;
     else
-        break;
+        a = c;
     end
     
     iter = iter + 1;
-    
-    if xr ~= 0
-        ea = abs((xr - xr_old) / xr) * 100;
-    end
-    
 end
 
-t = xr;
+t = c;
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 
