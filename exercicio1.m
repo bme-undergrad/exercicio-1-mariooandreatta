@@ -8,7 +8,7 @@ imax = 20;
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 
 t_roots = zeros(imax,1);
-t_roots(1) = x0;
+t_roots(1) = x0; 
 
 for ii = 1:length(t_roots)-1
 if ii ~= 1
